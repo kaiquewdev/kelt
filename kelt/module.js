@@ -5,7 +5,7 @@
         var Kelt = root.Kelt = exports;    
     }
     
-    // Command CLI
+    // Command prefix
     var commandPrefix = null;
 
     var Command = Kelt.command = {};
@@ -22,6 +22,36 @@
         } else if ( 'undefined' === typeof( value ) ) {    
             output = commandPrefix;
         }
+
+        return output;
+    };
+
+    // Command Action
+    var commandActions = {};
+
+    Command.action = Kelt.command.action = function ( action, value ) {
+        var output = false;
+
+        if ( action && 'undefined' === typeof( value ) ) {
+            if ( action in commandActions ) {
+                output = {
+                    self: commandActions[ action ],
+                    exec: function () {
+                        return ( commandActions[ action ] ).call( this, arguments );    
+                    }    
+                };
+            } else {
+                output = undefined;    
+            }
+        } else if ( action && value ) {
+            commandActions[ action ] = value;    
+
+            if ( action in commandActions ) {
+                output = true;    
+            }
+        } else if ( 'undefined' === typeof( action ) && 'undefined' === typeof( value ) ) {
+            output = false;
+        } 
 
         return output;
     };
