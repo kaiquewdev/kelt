@@ -1,32 +1,32 @@
 {
-    'name': 'kelt',
-    'preferGlobal': 'true',
-    'version': '0.0.1',
-    'author': 'Kaique da Silva <kaique.developer@gmail.com>',
-    'description': 'kelt is a simple command line interface to create template from a project and reutilize.',
-    'bin': [
-        'kelt': './kelt/module.js'
-    ],
-    'main': './kelt/module.js',
-    'repository': [
-        'type': 'git',
-        'url': 'https://github.com/kaiquewdev/kelt.git'
-    ],
-    'keywords': [
-        'cli',
-        'skleton',
-        'scaffolding',
-        'package'
-    ],
-    'dependencies': {
-        'vodevil': '*'    
-    },
-    'devDependencies': {
-        'chai': '*',
-        'sinon': '*'
-    },
-    'license': 'freeBSD',
-    'engines': {
-        'node': '>=0.6'    
-    }
+  "name": "kelt",
+  "preferGlobal": "true",
+  "version": "0.0.1",
+  "author": "Kaique da Silva <kaique.developer@gmail.com>",
+  "description": "kelt is a simple command line interface to create template from a project and reutilize.",
+  "bin": {
+    "kelt": "./kelt/module.js"
+  },
+  "main": "./kelt/module.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kaiquewdev/kelt.git"
+  },
+  "keywords": [
+    "cli",
+    "skleton",
+    "scaffolding",
+    "package"
+  ],
+  "dependencies": {
+    "vodevil": "*"
+  },
+  "devDependencies": {
+    "chai": "*",
+    "sinon": "*"
+  },
+  "license": "freeBSD",
+  "engines": {
+    "node": ">=0.6"
+  }
 }
