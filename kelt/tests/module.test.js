@@ -48,5 +48,21 @@ suite('Kelt', function () {
 
             expect( input ).to.deep.equal( ['test'] );
         });
+
+        test('false help if not receive parameters', function () {
+            expect( kelt.parameter.help() ).to.be.false;    
+        });
+
+        test('undefined help parameter', function () {
+            expect( kelt.parameter.help('test') ).to.be.equal(undefined);    
+        });
+
+        test('set help parameter', function () {
+            expect( kelt.parameter.help('test', 'help test') );    
+        });
+
+        test('get help parameter', function () {
+            expect( kelt.parameter.help('test') ).to.be.equal('help test');    
+        });
     });
 });

@@ -35,10 +35,7 @@
         if ( action && 'undefined' === typeof( value ) ) {
             if ( action in commandActions ) {
                 output = {
-                    self: commandActions[ action ],
-                    exec: function () {
-                        return ( commandActions[ action ] ).call( this, arguments );    
-                    }    
+                    exec: commandActions[ action ]    
                 };
             } else {
                 output = undefined;    
@@ -72,6 +69,34 @@
 
                 return action;
             });
+        }
+
+        return output;
+    };
+
+    var commandActionHelpers = {};
+
+    var Parameter = Kelt.parameter = {};
+
+    Parameter.help = Kelt.parameter.help = function ( action, value ) {
+        var vodevil = require('vodevil'),
+            actions = Object.keys( commandActions ),
+            output = false;    
+
+        if ( action && 'undefined' === typeof( value ) ) {
+            if ( vodevil.in( actions, action ) ) {
+               output = commandActionHelpers[ action ];    
+            } else if ( !vodevil.in( actions, action ) ) {
+                output = undefined;    
+            } 
+        } else if ( action && value ) {
+            if ( vodevil.in( actions, action ) ) {
+                commandActionHelpers[ action ] = value;    
+
+                if ( commandActionHelpers[ action ] ) {
+                    output = true;    
+                }
+            }     
         }
 
         return output;
