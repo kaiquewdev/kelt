@@ -55,4 +55,25 @@
 
         return output;
     };
+
+    var Parameters = Kelt.parameters = {};
+
+    Parameters.list = Kelt.parameters.list = function ( options ) {
+        var vodevil = require('vodevil'),
+            output = [];
+
+        if ( options && 'prefix' in options ) {
+            var actions = Object.keys( commandActions );
+
+            output = vodevil.intersect( actions, function ( action ) {
+                if ( options['prefix'] ) {        
+                    action = Command.prefix() + action;
+                }
+
+                return action;
+            });
+        }
+
+        return output;
+    };
 }).call(this);

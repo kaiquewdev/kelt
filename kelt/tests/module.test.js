@@ -35,4 +35,18 @@ suite('Kelt', function () {
             expect( kelt.command.action() ).to.be.false;    
         });
     });
+
+    suite('Paramaters', function () {
+        test('list parameters with prefix', function () {
+            var input = kelt.parameters.list({prefix: true});    
+
+            expect( input ).to.deep.equal( ['--test'] );
+        });    
+
+        test('list parameters without prefix', function () {
+            var input = kelt.parameters.list({prefix: false});    
+
+            expect( input ).to.deep.equal( ['test'] );
+        });
+    });
 });
