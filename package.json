@@ -5,7 +5,7 @@
   "author": "Kaique da Silva <kaique.developer@gmail.com>",
   "description": "kelt is a simple command line interface to create template from a project and reutilize.",
   "bin": {
-    "kelt": "./kelt/module.js"
+    "kelt": "./kelt/cli.js"
   },
   "main": "./kelt/module.js",
   "repository": {
