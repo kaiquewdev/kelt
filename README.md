@@ -1,5 +1,4 @@
-Kelt
-====
+# Kelt
 
 kelt is a simple command line interface to create template from a project and reutilize.
 
@@ -19,11 +18,10 @@ tip: Creates the keltc.json, a configuration file who contains, main templates p
 
 tip: Copy the template to the way you send it to.
 
-
----------------------------------
-
-created by Kaique da Silva < kaique.developer@gmail.com >
-
----------------------------------
+## License
 
 This project use FreeBSD license.
+
+-------------------------------------------------------------------------------------------
+
+created by Kaique da Silva < kaique.developer@gmail.com >
