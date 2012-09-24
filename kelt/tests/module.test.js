@@ -65,4 +65,31 @@ suite('Kelt', function () {
             expect( kelt.parameter.help('test') ).to.be.equal('help test');    
         });
     });
+    
+    suite('Template', function () {
+        test('copy a template project', function () {
+            expect( 
+                kelt.template.clone(
+                    '/home/kaique/templates/hello', 
+                    '/home/kaique/cases/test-case'
+                ) 
+            ).to.be.true;    
+        });
+
+        test('undefined template directory', function () {
+            expect( kelt.template.source() ).to.be.equal(undefined);    
+        });
+
+        test('set template directory', function () {
+            expect( kelt.template.source('/home/kaique/templates') ).to.be.true;    
+        });
+
+        test('set template fail', function () {
+            expect( kelt.template.source('/home/kaique/template') ).to.be.false;   
+        });
+
+        test('get template directory', function () {
+            expect( kelt.template.source() );    
+        });
+    });
 });

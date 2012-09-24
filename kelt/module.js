@@ -101,4 +101,45 @@
 
         return output;
     };
+
+    var templateConfiguration = {
+        source: undefined    
+    };
+
+    var Template = Kelt.template = {};
+
+    Template.clone = Kelt.template.clone = function ( source, destiny ) {
+        var fs = require('fs'),
+            spawn = require('child_process').spawn,
+            output = false;
+
+        if ( source && destiny && fs.existsSync( source ) ) {
+            var clone = spawn( 'cp', [ '-rf', source, destiny ] );
+
+            if ( fs.existsSync( destiny ) ) {
+                output = true;    
+            }
+        }
+
+        return output;
+    };
+
+    Template.source = Kelt.template.source = function ( path ) {
+        var fs = require('fs'),
+            output = templateConfiguration.source;
+
+        if ( path ) {
+            if ( fs.existsSync( path ) ) {
+                templateConfiguration.source = path;
+
+                if ( 'undefined' !== typeof( templateConfiguration.source ) ) {
+                    output = true;    
+                }
+            } else {
+                output = false;    
+            }
+        }
+
+        return output;
+    };
 }).call(this);
