@@ -14,7 +14,7 @@ tip: you may need to use the sudo command.
 
 tip: Creates the keltc.json, a configuration file who contains, main templates path.
 
-    kelt --clone <package-name> <path-name>
+    kelt --clone <origin> <destiny>
 
 tip: Copy the template to the way you send it to.
 
