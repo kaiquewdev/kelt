@@ -62,7 +62,7 @@ kelt.command.action('list', function ( type ) {
         config = undefined;
 
     if ( fs.existsSync( keltc ) ) {
-        config = require( keltc );
+        config = JSON.parse( fs.readFileSync( keltc ) );
 
         var templateList = fs.readdirSync( config.main ),
             header = 'List of ' + config.main,
@@ -109,7 +109,7 @@ kelt.command.action('pull', function ( model ) {
         clone = kelt.command.action( 'clone' );
 
     if ( fs.existsSync( keltc ) ) {
-        config = require( keltc );
+        config = JSON.parse( fs.readFileSync( keltc ) );
 
         clone.exec( model, config.main );
 
