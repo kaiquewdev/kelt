@@ -1,7 +1,7 @@
 {
   "name": "kelt",
   "preferGlobal": "true",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Kaique da Silva <kaique.developer@gmail.com>",
   "description": "kelt is a simple command line interface to create template from a project and reutilize.",
   "bin": {

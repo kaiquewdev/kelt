@@ -20,13 +20,6 @@ kelt.command.action('help', function () {
 
 kelt.parameter.help('help', 'helt to use this cli.');
 
-// Clone action
-kelt.command.action('clone', function ( source, destiny ) {
-    kelt.template.clone( source, destiny );
-});
-
-kelt.parameter.help('clone', 'clone a template, from the source to your destiny.');
-
 // Start action
 kelt.command.action('start', function () {
     var fs = require('fs'),
@@ -53,6 +46,53 @@ kelt.command.action('start', function () {
 
 kelt.parameter.help('start', 'Create the config file.');
 
+// Clone action
+kelt.command.action('clone', function ( source, destiny ) {
+    kelt.template.clone( source, destiny );
+});
+
+kelt.parameter.help('clone', 'clone a template, from the source to your destiny.');
+
+// List templates
+kelt.command.action('list', function ( type ) {
+    var fs = require('fs'),
+        keltc = './keltc.json',
+        config = undefined;
+
+    if ( fs.existsSync( keltc ) ) {
+        config = require( keltc );
+
+        var templateList = fs.readdirSync( config.main ),
+            header = 'List of ' + config.main,
+            hr = ( new Array( header.length + 1 ) ).join('-'),
+            separator = ',\n';
+
+        if ( undefined !== type ) {
+            templateList = vodevil.intersect( templateList, function ( item ) {
+                if ( item.search( type ) > -1 ) {
+                    return item;    
+                }    
+            });    
+
+            if ( templateList.length === 0 ) {
+                header = 'Sorry but not exists file with ' + type;    
+
+                console.log( header );
+            } else {
+                console.log( header );    
+                console.log( hr );
+                console.log( templateList.join( separator ) );
+            }
+        } else {
+            console.log( header );    
+            console.log( hr );
+            console.log( templateList.join( separator ) );
+        }
+    }
+});
+
+kelt.parameter.help('list', 'list of existing models. By extension or not.');
+
 // Unrecognized action
 var unrecognize = function () {
     console.log('Kelt version 0.0.1 \n');
@@ -69,20 +109,32 @@ vodevil.intersect( prefixParameters, function ( content, id ) {
     var fs = require('fs'),
         parameters = kelt.parameters.list({ prefix: false }),
         currentParameter = parameters[ id ],
-        command = kelt.command.action( currentParameter );
+        command = kelt.command.action( currentParameter ),
+        keltc = './keltc.json';
 
     if ( undefined !== command && content === args[0] ) {
         if ( 'clone' === currentParameter ) {
-            if ( fs.existsSync( './keltc.json' ) ) {
-                var config = JSON.parse( fs.readFileSync( './keltc.json' ) );
+            if ( fs.existsSync( keltc ) ) {
+                var config = require( keltc );
                 
                 if ( fs.existsSync( config.main ) ) {
+                    // find slash, if not exist fill.
                     config['main'] = ( config.main.search('\/$') > -1 && config.main ) || config.main + '/';
-                    command.exec( config.main + args[1], args[2] );
+
+                    var templateFile = config.main + args[1];
+
+                    if ( fs.existsSync( templateFile ) ) {
+                        command.exec( templateFile, args[2] );
+                        console.log('Done \"%s\" was copied!', args[1]);
+                    } else if ( !fs.existsSync( templateFile ) ) {
+                        console.log( '\"%s\" not exists!', templateFile );    
+                    }
                 }
             } else {
                 command.exec( args[1], args[2] ); 
             }
+        } else if ( 'list' === currentParameter ) {
+            command.exec( args[1] );
         } else {
             command.exec();    
         }
