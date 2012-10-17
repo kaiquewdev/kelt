@@ -8,7 +8,9 @@ kelt.command.prefix('--');
 
 // Help command
 kelt.command.action('help', function () {
-    console.log('Kelt cli version 0.0.1 \n');
+    var package = require('../package.json');
+
+    console.log( 'Kelt cli version %s \n', package.version );
 
     vodevil.intersect( kelt.parameters.list({ prefix: true }), function ( content, id ) {
         var parameters = kelt.parameters.list({ prefix: false });
@@ -82,20 +84,50 @@ kelt.command.action('list', function ( type ) {
                 console.log( header );    
                 console.log( hr );
                 console.log( templateList.join( separator ) );
+                console.log( hr );
+                console.log( 'Exists %s items.', templateList.length );
             }
         } else {
             console.log( header );    
             console.log( hr );
             console.log( templateList.join( separator ) );
+            console.log( hr );
+            console.log( 'Exists %s items.', templateList.length );
         }
+    } else {
+        console.log('Should be kelt, not was started!');    
     }
 });
 
 kelt.parameter.help('list', 'list of existing models. By extension or not.');
 
+// Pull model to models.
+kelt.command.action('pull', function ( model ) {
+    var fs = require('fs'),
+        keltc = './keltc.json',
+        config = undefined,
+        clone = kelt.command.action( 'clone' );
+
+    if ( fs.existsSync( keltc ) ) {
+        config = require( keltc );
+
+        clone.exec( model, config.main );
+
+        if ( fs.existsSync( config.main + '/' + model ) ) {
+            console.log( 'Done \"%s\" model, was pulled!', model );    
+        }
+    } else {
+        console.log('Should be kelt, not was started!');    
+    }
+});
+
+kelt.parameter.help('pull', 'send a model, to your models.');
+
 // Unrecognized action
 var unrecognize = function () {
-    console.log('Kelt version 0.0.1 \n');
+    var package = require('../package.json');
+
+    console.log( 'Kelt version %s \n', package.version );
     console.log('use --help, to have more information, about this cli.');
 };
 
@@ -133,7 +165,7 @@ vodevil.intersect( prefixParameters, function ( content, id ) {
             } else {
                 command.exec( args[1], args[2] ); 
             }
-        } else if ( 'list' === currentParameter ) {
+        } else if ( 'list' === currentParameter || 'pull' === currentParameter ) {
             command.exec( args[1] );
         } else {
             command.exec();    
