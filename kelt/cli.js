@@ -147,7 +147,7 @@ vodevil.intersect( prefixParameters, function ( content, id ) {
     if ( undefined !== command && content === args[0] ) {
         if ( 'clone' === currentParameter ) {
             if ( fs.existsSync( keltc ) ) {
-                var config = require( keltc );
+                var config = JSON.parse( fs.readFileSync( keltc ) );
                 
                 if ( fs.existsSync( config.main ) ) {
                     // find slash, if not exist fill.
